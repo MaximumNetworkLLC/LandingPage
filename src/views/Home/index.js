@@ -1,10 +1,8 @@
 import { getAuth, signOut } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
-import bg1 from "../../assets/Whitelist1.png";
-import bg2 from "../../assets/Whitelist2.png";
-import bg3 from "../../assets/Whiteilst3.png";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
+
 const Home = () => {
   const auth = getAuth();
   const logout = () => {
@@ -17,8 +15,6 @@ const Home = () => {
         console.log("Error", error);
       });
   };
-
-  const images = [{ url: bg1 }, { url: bg2 }, { url: bg3 }];
 
   return (
     <div className="App flex h-screen w-full font-mont">
@@ -55,14 +51,57 @@ const Home = () => {
       </div>
       {/* Right Banner */}
       <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-[55%] flex flex-col items-center">
-        <AwesomeSlider animation="cubeAnimation">
-          <div className="flex justify-center items-center" data-src={bg1}>
-            <p className="text-3xl text-center text-white font-semibold 3xl:text-4xl mt-2">
-              Whitelisted!
-            </p>
+        <AwesomeSlider
+          style={{ height: "100%"}}
+          bullets={false}
+          animation="cubeAnimation"
+          buttons
+          infinite
+        >
+          <div
+            style={{
+              backgroundImage: `url('/images/Whitelist1.png')`,
+            }}
+            className="flex flex-col"
+          >
+            <div className="mt-[50%] px-14">
+              <p className="text-3xl w-[90%] text-white font-semibold  3xl:text-4xl mt-2">
+                MANY CRYPTOCURRENCIES HAVE OUTPERFORMED{" "}
+                <span className="text-pink-600">S&P500</span>{" "}
+                <span className="font-normal">IN THE LAST DECADE</span>
+              </p>
+            </div>
           </div>
-          <div data-src={bg2} />
-          <div data-src={bg3} />
+          <div
+            style={{
+              backgroundImage: `url('/images/Whitelist2.png')`,
+            }}
+            className="flex flex-col"
+          >
+            <div className="mt-[50%] px-14 w-[90%]">
+              <p className="text-3xl text-white font-semibold  3xl:text-4xl mt-2">
+                <span className="text-pink-600">94%</span> OF GEN Z AND
+                MILLENNIALS ARE SEEING CRYPTO AS AN ATTRACTIVE INVESTMENT{" "}
+                <span className="font-normal">OR HOLD AN ACTIVE PORTFOLIO</span>
+              </p>
+            </div>
+          </div>
+          <div
+            style={{
+              backgroundImage: `url('/images/Whiteilst3.png')`,
+            }}
+            className="flex flex-col"
+          >
+            <div className="mt-[50%] px-12">
+              <p className="text-3xl w-[70%] text-white font-semibold  3xl:text-4xl mt-2">
+                LOOKING TO GET SOME{" "}
+                <span className="text-pink-600">EXPOSURE</span> ?{" "}
+              </p>
+              <p className="text-3xl w-[95%] text-white font-normal  3xl:text-4xl mt-4">
+                DAUNTED BY THE CHOICES AND VOLATILITY IN THE MARKET ?
+              </p>
+            </div>
+          </div>
         </AwesomeSlider>
       </div>
     </div>
