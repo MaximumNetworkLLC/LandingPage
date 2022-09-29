@@ -14,16 +14,15 @@ const OTPVerification = () => {
       .confirm(OTP)
       .then((result) => {
         const user = result.user;
-        console.log("USER VERIFIED", user);
       })
       .catch((error) => {
         console.log("USER NOT VERIFIED", error);
       });
   };
 
-  useEffect(() => {
-    console.log("OTP", OTP);
-  }, [OTP]);
+  // useEffect(() => {
+  //   console.log("OTP", OTP);
+  // }, [OTP]);
 
   return (
     <div className="App bg-bgl1 flex h-screen w-full font-mont">

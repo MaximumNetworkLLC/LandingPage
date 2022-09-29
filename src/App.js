@@ -42,12 +42,11 @@ function App() {
         maximumInstance(user?.accessToken)
           .get(`/setRole/${user.uid}`)
           .then((response) => {
-            console.log("CUSTOM ROLE SET", response?.data);
-            navigate("/dashboard");
+            navigate("/home");
           })
           .catch((err) => console.log("Error", err));
       }
-      navigate("/dashboard");
+      navigate("/home");
     } else {
       navigate("/login");
     }
@@ -60,7 +59,7 @@ function App() {
   return (
     <div className="App flex">
       <Loader />
-      <Sidebar />
+      {/* <Sidebar /> */}
       {makeRoutes()}
     </div>
   );

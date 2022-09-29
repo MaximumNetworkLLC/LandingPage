@@ -13,11 +13,11 @@ import countries from "../../constants/countries.json";
 const Login = () => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [isPolicyChecked, setIsPolicyChecked] = useState(false);
-  const [isTermsChecked, setIsTermsChecked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
   const [OTP, setOTP] = useState("");
-  const [countryCode, setCountryCode] = useState("🇮🇳 (+91) India");
+  const [countryCode, setCountryCode] = useState("🇮🇳 (+91)");
 
   const generateRecaptcha = () => {
     return (window.recaptchaVerifier = new RecaptchaVerifier(
@@ -25,8 +25,6 @@ const Login = () => {
       {
         size: "invisible",
         callback: (response) => {
-          console.log("CAPTCHA RESPONSE", response);
-          // navigate("/otpVerification");
           setPageIndex(1);
         },
       },
@@ -35,12 +33,10 @@ const Login = () => {
   };
 
   const requestOTP = () => {
-    console.log("OTP REQUESTED");
     generateRecaptcha();
     let appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(auth, "+91 " + phoneNumber, appVerifier)
       .then((confirmationResult) => {
-        console.log("RES", confirmationResult);
         window.confirmationResult = confirmationResult;
       })
       .catch((err) => {
@@ -48,23 +44,38 @@ const Login = () => {
       });
   };
 
-  useEffect(() => {
-    console.log("Policy Checked", isPolicyChecked);
-    console.log("Terms Checked", isTermsChecked);
-  }, [isPolicyChecked, isTermsChecked]);
+  // useEffect(() => {
+  //   console.log("Policy Checked", isPolicyChecked);
+  //   console.log("Terms Checked", isTermsChecked);
+  // }, [isPolicyChecked, isTermsChecked]);
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
 
   const validation = () => {
-    if (phoneNumber && isPolicyChecked && isTermsChecked) {
-      requestOTP();
-    } else if (!phoneNumber) {
-      toast.warning("Invalid phone number", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    } else if (!isPolicyChecked || !isTermsChecked) {
-      toast.warning("Please check all fields", {
+    if (phoneNumber && email && name) {
+      console.log("Email", validateEmail(email));
+      validateEmail(email)
+        ? requestOTP()
+        : toast.warning("Please Enter Valid Email Address", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+      // requestOTP();
+    } else {
+      toast.warning("Please fill all fields", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
+    // else if (!isPolicyChecked || !isTermsChecked) {
+    //   toast.warning("Please check all fields", {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //   });
+    // }
   };
 
   const verifyOTP = () => {
@@ -72,13 +83,11 @@ const Login = () => {
       .confirm(OTP)
       .then((result) => {
         const user = result.user;
-        console.log("USER VERIFIED", user);
         toast.success("Logged in successfully !!", {
           position: toast.POSITION.TOP_RIGHT,
         });
       })
       .catch((error) => {
-        console.log("USER NOT VERIFIED", error);
         toast.error("Please enter correct OTP", {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -95,7 +104,6 @@ const Login = () => {
       appVerifier
     )
       .then((confirmationResult) => {
-        console.log("RES", confirmationResult);
         window.confirmationResult = confirmationResult;
       })
       .catch((err) => {
@@ -103,9 +111,9 @@ const Login = () => {
       });
   };
 
-  useEffect(()=>{
-    OTP.length === 6 && verifyOTP()
-  },[OTP])
+  useEffect(() => {
+    OTP.length === 6 && verifyOTP();
+  }, [OTP]);
 
   return (
     <div className="App flex h-screen w-full font-mont">
@@ -133,48 +141,75 @@ const Login = () => {
         {pageIndex == 0 && (
           <div className="innerContaner w-full h-full flex  flex-col py-10 items-center justify-center 2.5xl:w-[80%] 3xl:w-[60%]">
             <p className="text-white text-center text-2xl font-semibold 3xl:text-4xl ">
-              Your Phone Number
+              Create Your Account
             </p>
             <div className="inputContainer flex  flex-col  w-full items-center mt-10">
               <GradientContainer
-                width="w-full"
                 height="h-20"
-                className={"mt-4"}
+                width="w-full"
+                className={"mt-5"}
                 children={
-                  <div className="rounded-2xl w-full  h-full flex flex-col  justify-between p-3">
-                    <select
-                      id="countries"
-                      value={countryCode}
-                      onChange={(e) => {
-                        console.log(e.target.value);
-                        setCountryCode(e.target.value);
-                      }}
-                      className="focus:outline-none font-semibold h-full w-full bg-transparent text-white text-xl rounded-2xl focus:ring-bg focus:border-bg"
-                    >
-                      {countries.map((item) => {
-                        return (
-                          <option>
-                            {item?.flag} ({item?.dial_code}) {item?.name}
-                          </option>
-                        );
-                      })}
-                    </select>
+                  <div className="rounded-2xl h-full w-full flex flex-row items-center justify-between">
+                    <div className="flex flex-col h-full w-full">
+                      <input
+                        type="text"
+                        class="form-control text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
+                        id="name"
+                        placeholder="Enter Your Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
                   </div>
                 }
               />
               <GradientContainer
                 height="h-20"
                 width="w-full"
-                className={"mt-4"}
+                className={"mt-5"}
                 children={
-                  <div className="rounded-2xl h-full flex flex-row items-center justify-between">
+                  <div className="rounded-2xl h-full w-full flex flex-row items-center justify-between">
                     <div className="flex flex-col h-full w-full">
+                      <input
+                        type="email"
+                        class="form-control text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
+                        id="email"
+                        placeholder="Enter Your Email Address"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                }
+              />
+              <GradientContainer
+                height="h-20"
+                width="w-full"
+                className={"mt-5"}
+                children={
+                  <div className="rounded-2xl w-full h-full flex items-center justify-between">
+                    <select
+                      id="countries"
+                      value={countryCode}
+                      onChange={(e) => {
+                        setCountryCode(e.target.value);
+                      }}
+                      className="focus:outline-none font-semibold h-full w-[28%] bg-transparent text-white text-xl rounded-2xl focus:ring-bg focus:border-bg p-2"
+                    >
+                      {countries.map((item) => {
+                        return (
+                          <option className="">
+                            {item?.flag} ({item?.dial_code})
+                          </option>
+                        );
+                      })}
+                    </select>
+                    <div className="flex flex-col w-[70%] h-full">
                       <input
                         type="text"
                         class="form-control text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
                         id="phoneNumber"
                         placeholder="Enter Phone Number"
-                        maxLength={10}
                         onKeyPress={(event) => {
                           if (!/[0-9]/.test(event.key)) {
                             event.preventDefault();
@@ -188,48 +223,11 @@ const Login = () => {
                 }
               />
             </div>
-            <div className="termsAndConditions justify-center flex flex-col mt-8">
-              <div className="checkboxRow justify-between items-center flex m-1">
-                <p className="font-light text-white 3xl:text-2xl w-[90%]">
-                  I have read and accept the
-                  <a href="#" className="text-purple-800 mx-2">
-                    Privacy Policy
-                  </a>
-                  and agree that my personal data will be processed.
-                </p>
-                <input
-                  checked={isPolicyChecked}
-                  id="remember"
-                  type="checkbox"
-                  value=""
-                  onChange={() =>
-                    setIsPolicyChecked((prev) => (prev ? false : true))
-                  }
-                  class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                  required
-                />
-              </div>
-              <div className="checkboxRow justify-between items-center flex m-1 mt-3">
-                <p className="font-light text-base  text-white 3xl:text-2xl w-3/4">
-                  I have read and accept the
-                  <a href="" className=" text-purple-800 mx-2">
-                    Terms of Use.
-                  </a>
-                </p>
-                <input
-                  checked={isTermsChecked}
-                  onChange={() =>
-                    setIsTermsChecked((prev) => (prev ? false : true))
-                  }
-                  id="remember"
-                  type="checkbox"
-                  value=""
-                  class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                  required
-                />
-              </div>
-            </div>
-            <ThemeButton text="Next" className={"mt-16"} onClick={validation} />
+            <ThemeButton
+              text="Next"
+              className={"mt-16 w-[80%]"}
+              onClick={validation}
+            />
           </div>
         )}
         {pageIndex == 1 && (
@@ -245,7 +243,6 @@ const Login = () => {
               <OTPInput
                 value={OTP}
                 onChange={(val) => {
-                  console.log(val);
                   setOTP(val);
                 }}
                 autoFocus
@@ -260,7 +257,7 @@ const Login = () => {
                   borderRadius: 10,
                   width: "50px",
                   height: "50px",
-                  fontWeight:600
+                  fontWeight: 600,
                 }}
               />
             </div>
@@ -271,11 +268,11 @@ const Login = () => {
                 </p>
               </div>
               <button
-                  onClick={resendOTP}
-                  className="text-white bg-primaryButton rounded-xl px-4 py-2 mt-2 ml-2 text-sm font-semibold"
-                >
-                  Resend OTP
-                </button>
+                onClick={resendOTP}
+                className="text-white bg-primaryButton rounded-xl px-4 py-2 mt-2 ml-2 text-sm font-semibold"
+              >
+                Resend OTP
+              </button>
               {/* <ThemeButton text="Verify" onClick={verifyOTP} /> */}
             </div>
           </div>

@@ -1,8 +1,0 @@
-.borderColor {
-    position: relative;
-    background: linear-gradient(168.82deg, #11855e 1.7%, rgba(155, 111, 238, 0.05) 51.63%, rgba(123, 127, 234, 0.05) 51.64%, #ad1364 99.52%);
-  border-radius: 18px;
-}
-.borderColorInner {
-  border-radius: 18px;
-}

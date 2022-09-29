@@ -9,10 +9,6 @@ import { numFormatter } from "../../utility/kFormatter";
 export const Table = (props) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("PROPS", props?.currentPrice);
-  }, [props?.currentPrice]);
-
   const columns = [
     {
       name: "NAME",
