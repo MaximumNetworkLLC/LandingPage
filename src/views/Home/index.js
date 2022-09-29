@@ -1,9 +1,11 @@
 import { getAuth, signOut } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
 import AwesomeSlider from "react-awesome-slider";
+import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
 
 const Home = () => {
+  const AutoplaySlider = withAutoplay(AwesomeSlider);
   const auth = getAuth();
   const logout = () => {
     signOut(auth)
@@ -51,12 +53,52 @@ const Home = () => {
       </div>
       {/* Right Banner */}
       <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-[55%] flex flex-col items-center">
-        <AwesomeSlider
-          style={{ height: "100%"}}
+        <AutoplaySlider
+          style={{ height: "100%" }}
           bullets={false}
           animation="cubeAnimation"
           buttons
           infinite
+          organicArrows={false}
+          buttonContentLeft={
+            <div className="font-bold text-xl">
+              <svg
+                class="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                ></path>
+              </svg>
+            </div>
+          }
+          buttonContentRight={
+            <div className="font-bold text-xl">
+              <svg
+                class="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </div>
+          }
+          play={true}
+          cancelOnInteraction={false} // should stop playing on user interaction
+          interval={2000}
         >
           <div
             style={{
@@ -102,7 +144,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-        </AwesomeSlider>
+        </AutoplaySlider>
       </div>
     </div>
   );
