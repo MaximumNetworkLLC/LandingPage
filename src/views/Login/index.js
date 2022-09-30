@@ -58,19 +58,20 @@ const Login = () => {
   };
 
   const validation = () => {
-    if (phoneNumber && email && name) {
-      console.log("Email", validateEmail(email));
-      validateEmail(email)
-        ? requestOTP()
-        : toast.warning("Please Enter Valid Email Address", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-      // requestOTP();
-    } else {
-      toast.warning("Please fill all fields", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
+    navigate('/home')
+    // if (phoneNumber && email && name) {
+    //   console.log("Email", validateEmail(email));
+    //   validateEmail(email)
+    //     ? requestOTP()
+    //     : toast.warning("Please Enter Valid Email Address", {
+    //         position: toast.POSITION.TOP_RIGHT,
+    //       });
+    //   // requestOTP();
+    // } else {
+    //   toast.warning("Please fill all fields", {
+    //     position: toast.POSITION.TOP_RIGHT,
+    //   });
+    // }
     // else if (!isPolicyChecked || !isTermsChecked) {
     //   toast.warning("Please check all fields", {
     //     position: toast.POSITION.TOP_RIGHT,

@@ -54,9 +54,8 @@ const Home = () => {
       {/* Right Banner */}
       <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-[55%] flex flex-col items-center">
         <AutoplaySlider
-          style={{ height: "100%" }}
+          style={{ height: "100%",width:"100%" }}
           bullets={false}
-          animation="cubeAnimation"
           buttons
           infinite
           organicArrows={false}
@@ -103,8 +102,9 @@ const Home = () => {
           <div
             style={{
               backgroundImage: `url('/images/Whitelist1.png')`,
+              backgroundRepeat:"no-repeat",
+              backgroundSize:"cover"
             }}
-            className="flex flex-col"
           >
             <div className="mt-[50%] px-14">
               <p className="text-3xl w-[90%] text-white font-semibold  3xl:text-4xl mt-2">
@@ -117,8 +117,9 @@ const Home = () => {
           <div
             style={{
               backgroundImage: `url('/images/Whitelist2.png')`,
+              backgroundRepeat:"no-repeat",
+              backgroundSize:"cover"
             }}
-            className="flex flex-col"
           >
             <div className="mt-[50%] px-14 w-[90%]">
               <p className="text-3xl text-white font-semibold  3xl:text-4xl mt-2">
@@ -131,8 +132,9 @@ const Home = () => {
           <div
             style={{
               backgroundImage: `url('/images/Whiteilst3.png')`,
+              backgroundRepeat:"no-repeat",
+              backgroundSize:"cover"
             }}
-            className="flex flex-col"
           >
             <div className="mt-[50%] px-12">
               <p className="text-3xl w-[70%] text-white font-semibold  3xl:text-4xl mt-2">
