@@ -9,6 +9,7 @@ import { GradientContainer } from "../../components/GradientContainer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import countries from "../../constants/countries.json";
+import { maximumInstance } from "../../setup";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Login = () => {
   const [name, setName] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
   const [OTP, setOTP] = useState("");
-  const [countryCode, setCountryCode] = useState("🇮🇳 (+91)");
+  const [countryCode, setCountryCode] = useState("IN (+91)");
 
   const generateRecaptcha = () => {
     return (window.recaptchaVerifier = new RecaptchaVerifier(
@@ -58,25 +59,18 @@ const Login = () => {
   };
 
   const validation = () => {
-    navigate('/home')
-    // if (phoneNumber && email && name) {
-    //   console.log("Email", validateEmail(email));
-    //   validateEmail(email)
-    //     ? requestOTP()
-    //     : toast.warning("Please Enter Valid Email Address", {
-    //         position: toast.POSITION.TOP_RIGHT,
-    //       });
-    //   // requestOTP();
-    // } else {
-    //   toast.warning("Please fill all fields", {
-    //     position: toast.POSITION.TOP_RIGHT,
-    //   });
-    // }
-    // else if (!isPolicyChecked || !isTermsChecked) {
-    //   toast.warning("Please check all fields", {
-    //     position: toast.POSITION.TOP_RIGHT,
-    //   });
-    // }
+    // navigate("/home");
+    if (phoneNumber && email && name) {
+      validateEmail(email)
+        ? requestOTP()
+        : toast.warning("Please Enter Valid Email Address", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+    } else {
+      toast.warning("Please fill all fields", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const verifyOTP = () => {
@@ -84,6 +78,16 @@ const Login = () => {
       .confirm(OTP)
       .then((result) => {
         const user = result.user;
+        maximumInstance(user?.accessToken)
+          .post(`/whiteListUser`, {
+            phoneNumber,
+            email,
+            name,
+          })
+          .then((response) => { 
+            localStorage.setItem('Counter', response?.data?.whitelistCounter)
+          })
+          .catch((err) => console.log("Error", err));
         toast.success("Logged in successfully !!", {
           position: toast.POSITION.TOP_RIGHT,
         });
@@ -120,6 +124,11 @@ const Login = () => {
     <div className="App flex h-screen w-full font-mont">
       {/* Left Banner */}
       <div className="Left  w-1/2 bg-gradient-to-tr from-slate-900 to-purple-800 p-10 px-15 flex flex-col justify-around">
+        <img
+          alt="logo"
+          className="h-[70px] w-[70px] rounded-full"
+          src={require("../../assets/logo.png")}
+        />
         <div className="innerConttainer  w-full h-full  flex  flex-col py-20 items-center justify-center">
           <img
             alt="welcomeImg"
@@ -190,17 +199,18 @@ const Login = () => {
                 children={
                   <div className="rounded-2xl w-full h-full flex items-center justify-between">
                     <select
-                      id="countries"
+                      name="country"
+                      id="country"
                       value={countryCode}
                       onChange={(e) => {
                         setCountryCode(e.target.value);
                       }}
-                      className="focus:outline-none font-semibold h-full w-[28%] bg-transparent text-white text-xl rounded-2xl focus:ring-bg focus:border-bg p-2"
+                      className="focus:outline-none font-semibold h-full w-[30%] bg-transparent text-white text-xl rounded-2xl focus:ring-bg focus:border-bg p-2"
                     >
                       {countries.map((item) => {
                         return (
-                          <option className="">
-                            {item?.flag} ({item?.dial_code})
+                          <option>
+                            {item?.code} ({item?.dial_code})
                           </option>
                         );
                       })}

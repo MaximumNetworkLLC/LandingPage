@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
+import { useEffect, useState } from "react";
 
 const Home = () => {
   const AutoplaySlider = withAutoplay(AwesomeSlider);
@@ -10,13 +11,17 @@ const Home = () => {
   const logout = () => {
     signOut(auth)
       .then((res) => {
-        console.log("USER LOGGED OUT", res);
         // setPageRightIndex(1);
       })
       .catch((error) => {
         console.log("Error", error);
       });
   };
+  const [counter, setCounter] = useState()
+
+  useEffect(() => {
+    setCounter(localStorage.getItem("Counter"))
+  }, [counter]);
 
   return (
     <div className="App flex h-screen w-full font-mont">
@@ -42,9 +47,9 @@ const Home = () => {
             </p>
           </div>
         </div>
-        <div onClick={logout} className="flex justify-end items-center">
+        <div className="flex justify-end items-center">
           <p className="bg-gradient-to-br from-white via-slate-400 to-slate-700 bg-clip-text text-transparent font-bold text-[40px]">
-            #386
+            #{counter}
           </p>
           <p className="bg-gradient-to-bl from-white via-slate-400 to-slate-700 bg-clip-text text-transparent font-semibold text-2xl mt-2">
             /500
@@ -58,6 +63,8 @@ const Home = () => {
           bullets={false}
           buttons
           infinite
+          To
+          mobileTouch
           organicArrows={false}
           buttonContentLeft={
             <div className="font-bold text-xl">
