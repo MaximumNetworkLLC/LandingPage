@@ -53,7 +53,9 @@ function App() {
   }
 
   useEffect(() => {
-    auth.onAuthStateChanged(onAuthStateChanged);
+    setTimeout(()=>{
+      auth.onAuthStateChanged(onAuthStateChanged);
+    },2000)
   }, []);
 
   return (

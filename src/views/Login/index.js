@@ -45,11 +45,6 @@ const Login = () => {
       });
   };
 
-  // useEffect(() => {
-  //   console.log("Policy Checked", isPolicyChecked);
-  //   console.log("Terms Checked", isTermsChecked);
-  // }, [isPolicyChecked, isTermsChecked]);
-
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -59,7 +54,6 @@ const Login = () => {
   };
 
   const validation = () => {
-    // navigate("/home");
     if (phoneNumber && email && name) {
       validateEmail(email)
         ? requestOTP()

@@ -29,7 +29,7 @@ const Home = () => {
       <div className="Left w-[45%] bg-gradient-to-tr from-slate-900 to-purple-800 p-5 flex flex-col justify-center">
         <img
           alt="logo"
-          className="h-[50px] w-[50px] rounded-full"
+          className="h-[60px] w-[60px] rounded-full"
           src={require("../../assets/logo.png")}
         />
         <div className="w-full h-full flex flex-col items-center justify-center">
