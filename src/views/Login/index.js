@@ -78,8 +78,8 @@ const Login = () => {
             email,
             name,
           })
-          .then((response) => { 
-            localStorage.setItem('Counter', response?.data?.whitelistCounter)
+          .then((response) => {
+            localStorage.setItem("Counter", response?.data?.whitelistCounter);
           })
           .catch((err) => console.log("Error", err));
         toast.success("Logged in successfully !!", {
@@ -131,7 +131,7 @@ const Login = () => {
           />
           <div className="items-center justify-center flex flex-col">
             <p className="text-md font-semibold text-center text-white 3xl:text-2xl ">
-              AI Powered financial manager
+              Analytics-driven portfolio Optimization tool
             </p>
             <p className="text-3xl text-center text-white font-semibold 3xl:text-4xl w-3/4 mt-2">
               Personalised portfolio for Maximum returns
