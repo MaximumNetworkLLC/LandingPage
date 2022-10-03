@@ -4,8 +4,11 @@ import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
 import { useEffect, useState } from "react";
+import Confetti from 'react-confetti'
+import { useWindowDimensions } from "../../hooks/useWindowDimension";
 
 const Home = () => {
+  const { height, width } = useWindowDimensions();
   const AutoplaySlider = withAutoplay(AwesomeSlider);
   const auth = getAuth();
   const logout = () => {
@@ -26,6 +29,10 @@ const Home = () => {
 
   return (
     <div className="App flex h-screen w-full font-mont">
+      <Confetti
+      width={width}
+      height={height}
+    />
       {/* Left Banner */}
       <div className="Left w-full bg-gradient-to-tr from-slate-900 to-purple-800 p-5 flex flex-col justify-center lg:w-[45%]">
         <img

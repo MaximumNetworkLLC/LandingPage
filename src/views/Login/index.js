@@ -61,6 +61,7 @@ const Login = () => {
 
   const validation = () => {
     // setPageIndex(1);
+    // navigate('/home')
     if (phoneNumber && email && name) {
       validateEmail(email)
         ? requestOTP()
