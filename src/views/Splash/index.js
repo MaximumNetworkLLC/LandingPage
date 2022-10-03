@@ -14,7 +14,7 @@ const Splash = () => {
     <div className="App font-mont flex flex-col h-screen w-full bg-gradient-to-tr from-slate-900 to-purple-800  items-center justify-center">
       <img
         alt="logo"
-        className="h-[300px] w-[300px] rounded-full"
+        className="h-[300px] w-[300px]"
         src={require("../../assets/logo.png")}
       />
       {/* <ProgressBar
