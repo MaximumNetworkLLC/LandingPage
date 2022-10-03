@@ -148,7 +148,7 @@ const Login = () => {
         </div>
       </div>
       {/* Right Banner */}
-      <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-1/2 md:p-10 sm:p-4 flex flex-col items-center sm:w-full lg:w-1/2">
+      <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-full md:p-10 sm:p-4 flex flex-col items-center lg:w-1/2">
         <ToastContainer hideProgressBar autoClose={1000} closeOnClick />
         {width < 1024 && (
           <div className="w-full">
