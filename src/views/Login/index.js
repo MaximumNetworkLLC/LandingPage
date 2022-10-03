@@ -125,7 +125,7 @@ const Login = () => {
   return (
     <div className="App flex h-screen w-full font-mont">
       {/* Left Banner */}
-      <div className="Left bg-gradient-to-tr from-slate-900 to-purple-800 p-10 px-15 flex flex-col justify-around sm:hidden lg:flex lg:w-1/2">
+      <div className="Left w-1/2 hidden bg-gradient-to-tr from-slate-900 to-purple-800 p-10 px-15 flex-col justify-around lg:flex">
         <img
           alt="logo"
           className="h-[70px] w-[70px] rounded-full"

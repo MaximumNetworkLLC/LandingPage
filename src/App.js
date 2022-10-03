@@ -16,11 +16,11 @@ const makeRoutes = () => {
         <Route
           path={route.path}
           element={
-            <Suspense
-              fallback={<div className="font-mono text-base">Loading...</div>}
-            >
+            // <Suspense
+            //   fallback={<div className="font-mono text-base">Loading...</div>}
+            // >
               <route.component />
-            </Suspense>
+            // </Suspense>
           }
           exact={route.exact}
         />
