@@ -17,11 +17,12 @@ const Home = () => {
         console.log("Error", error);
       });
   };
-  const [counter, setCounter] = useState()
+  const [counter, setCounter] = useState();
 
   useEffect(() => {
-    setCounter(localStorage.getItem("Counter"))
-  }, [counter]);
+    let count = localStorage.getItem("Counter");
+    if (count) setCounter(count);
+  }, [counter, localStorage]);
 
   return (
     <div className="App flex h-screen w-full font-mont">
@@ -59,7 +60,7 @@ const Home = () => {
       {/* Right Banner */}
       <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple flex-col items-center hidden lg:flex lg:w-[55%]">
         <AutoplaySlider
-          style={{ height: "100%",width:"100%" }}
+          style={{ height: "100%", width: "100%" }}
           bullets={false}
           buttons
           infinite
@@ -109,8 +110,8 @@ const Home = () => {
           <div
             style={{
               backgroundImage: `url('/images/Whitelist1.png')`,
-              backgroundRepeat:"no-repeat",
-              backgroundSize:"cover"
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
             }}
           >
             <div className="mt-[50%] px-14">
@@ -124,8 +125,8 @@ const Home = () => {
           <div
             style={{
               backgroundImage: `url('/images/Whitelist2.png')`,
-              backgroundRepeat:"no-repeat",
-              backgroundSize:"cover"
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
             }}
           >
             <div className="mt-[50%] px-14 w-[90%]">
@@ -139,8 +140,8 @@ const Home = () => {
           <div
             style={{
               backgroundImage: `url('/images/Whiteilst3.png')`,
-              backgroundRepeat:"no-repeat",
-              backgroundSize:"cover"
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
             }}
           >
             <div className="mt-[50%] px-12">
