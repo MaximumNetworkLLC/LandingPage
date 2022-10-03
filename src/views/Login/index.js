@@ -10,15 +10,21 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import countries from "../../constants/countries.json";
 import { maximumInstance } from "../../setup";
+import { useWindowDimensions } from "../../hooks/useWindowDimension";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { height, width } = useWindowDimensions();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pageIndex, setPageIndex] = useState(0);
   const [OTP, setOTP] = useState("");
   const [countryCode, setCountryCode] = useState("IN (+91)");
+
+  useEffect(() => {
+    console.log(width, height);
+  }, [width, height]);
 
   const generateRecaptcha = () => {
     return (window.recaptchaVerifier = new RecaptchaVerifier(
@@ -54,6 +60,7 @@ const Login = () => {
   };
 
   const validation = () => {
+    // setPageIndex(1);
     if (phoneNumber && email && name) {
       validateEmail(email)
         ? requestOTP()
@@ -94,6 +101,7 @@ const Login = () => {
   };
 
   const resendOTP = () => {
+    // navigate("/home");
     let appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(
       auth,
@@ -117,7 +125,7 @@ const Login = () => {
   return (
     <div className="App flex h-screen w-full font-mont">
       {/* Left Banner */}
-      <div className="Left  w-1/2 bg-gradient-to-tr from-slate-900 to-purple-800 p-10 px-15 flex flex-col justify-around">
+      <div className="Left w-1/2 bg-gradient-to-tr from-slate-900 to-purple-800 p-10 px-15 flex flex-col justify-around sm:hidden lg:flex">
         <img
           alt="logo"
           className="h-[70px] w-[70px] rounded-full"
@@ -140,24 +148,33 @@ const Login = () => {
         </div>
       </div>
       {/* Right Banner */}
-      <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-1/2  p-20  flex flex-col items-center px-40">
+      <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-1/2 md:p-10 sm:p-4 flex flex-col items-center sm:w-full lg:w-1/2">
         <ToastContainer hideProgressBar autoClose={1000} closeOnClick />
+        {width < 1024 && (
+          <div className="w-full">
+            <img
+              alt="logo"
+              className="h-[70px] w-[70px] rounded-full"
+              src={require("../../assets/logo.png")}
+            />
+          </div>
+        )}
         {pageIndex == 0 && (
-          <div className="innerContaner w-full h-full flex  flex-col py-10 items-center justify-center 2.5xl:w-[80%] 3xl:w-[60%]">
+          <div className="innerContaner w-full h-full flex  flex-col items-center justify-center">
             <p className="text-white text-center text-2xl font-semibold 3xl:text-4xl ">
               Create Your Account
             </p>
-            <div className="inputContainer flex  flex-col  w-full items-center mt-10">
+            <div className="inputContainer flex  flex-col  w-full items-center mt-5">
               <GradientContainer
                 height="h-20"
                 width="w-full"
-                className={"mt-5"}
+                className={"mt-5 max-w-[400px]"}
                 children={
                   <div className="rounded-2xl h-full w-full flex flex-row items-center justify-between">
                     <div className="flex flex-col h-full w-full">
                       <input
                         type="text"
-                        class="form-control text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
+                        class="form-control text-xl sm:text-lg lg:text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
                         id="name"
                         placeholder="Enter Your Name"
                         value={name}
@@ -170,13 +187,13 @@ const Login = () => {
               <GradientContainer
                 height="h-20"
                 width="w-full"
-                className={"mt-5"}
+                className={"mt-5 max-w-[400px]"}
                 children={
                   <div className="rounded-2xl h-full w-full flex flex-row items-center justify-between">
                     <div className="flex flex-col h-full w-full">
                       <input
                         type="email"
-                        class="form-control text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
+                        class="form-control text-xl sm:text-lg lg:text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
                         id="email"
                         placeholder="Enter Your Email Address"
                         value={email}
@@ -189,9 +206,9 @@ const Login = () => {
               <GradientContainer
                 height="h-20"
                 width="w-full"
-                className={"mt-5"}
+                className={"mt-5 max-w-[400px]"}
                 children={
-                  <div className="rounded-2xl w-full h-full flex items-center justify-between">
+                  <div className="rounded-2xl w-full h-full flex items-center">
                     <select
                       name="country"
                       id="country"
@@ -199,7 +216,7 @@ const Login = () => {
                       onChange={(e) => {
                         setCountryCode(e.target.value);
                       }}
-                      className="focus:outline-none font-semibold h-full w-[30%] bg-transparent text-white text-xl rounded-2xl focus:ring-bg focus:border-bg p-2"
+                      className="focus:outline-none font-semibold h-full  bg-transparent text-white text-sm sm:text-[12px] lg:text-xl rounded-2xl focus:ring-bg focus:border-bg p-2"
                     >
                       {countries.map((item) => {
                         return (
@@ -209,10 +226,10 @@ const Login = () => {
                         );
                       })}
                     </select>
-                    <div className="flex flex-col w-[70%] h-full">
+                    <div className="flex flex-col h-full">
                       <input
                         type="text"
-                        class="form-control text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
+                        class="form-control text-xl sm:text-lg lg:text-xl text-white w-full h-full  rounded-2xl flex  px-3 py-1.5 placeholder-gray-600 font-semibold bg-clip-padding transition ease-in-out bg-transparent `focus:text-gray-700 focus:border-blue-600 focus:outline-none"
                         id="phoneNumber"
                         placeholder="Enter Phone Number"
                         onKeyPress={(event) => {
@@ -230,17 +247,17 @@ const Login = () => {
             </div>
             <ThemeButton
               text="Next"
-              className={"mt-16 w-[80%]"}
+              className={"mt-16 w-[80%] max-w-[400px]"}
               onClick={validation}
             />
           </div>
         )}
         {pageIndex == 1 && (
           <div className="innerContaner w-full h-full flex  flex-col py-10 gap-16 items-center justify-center 2.5xl:w-[80%] 3xl:w-[60%]">
-            <p className="text-white text-center text-2xl font-bold ">
+            <p className="text-white text-center text-2xl font-bold">
               Fill the code
             </p>
-            <p className="text-white text-center text-base font-medium  ">
+            <p className="text-white text-center text-base font-medium">
               Code is sent. If you still didn’t get the code, please make sure
               you’ve filled your phone number correctly
             </p>
@@ -260,9 +277,10 @@ const Login = () => {
                   borderWidth: "2px",
                   borderColor: "#9c27b0",
                   borderRadius: 10,
-                  width: "50px",
-                  height: "50px",
+                  width: width < 768 ? "40px" : "50px",
+                  height: width < 768 ? "40px" : "50px",
                   fontWeight: 600,
+                  margin:4,
                 }}
               />
             </div>

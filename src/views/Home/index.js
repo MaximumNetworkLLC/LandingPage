@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <div className="App flex h-screen w-full font-mont">
       {/* Left Banner */}
-      <div className="Left w-[45%] bg-gradient-to-tr from-slate-900 to-purple-800 p-5 flex flex-col justify-center">
+      <div className="Left w-[45%] bg-gradient-to-tr from-slate-900 to-purple-800 p-5 flex flex-col justify-center sm:w-full lg:w-[45%]">
         <img
           alt="logo"
           className="h-[60px] w-[60px] rounded-full"
@@ -35,7 +35,7 @@ const Home = () => {
         <div className="w-full h-full flex flex-col items-center justify-center">
           <img
             alt="whitelist"
-            className="h-[380px] w-[400px] rounded-full "
+            className="h-[380px] w-[400px] rounded-full sm:h-[300px] md:h-[380px]"
             src={require("../../assets/whitelist.png")}
           />
           <div className="items-center justify-center flex flex-col">
@@ -57,7 +57,7 @@ const Home = () => {
         </div>
       </div>
       {/* Right Banner */}
-      <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-[55%] flex flex-col items-center">
+      <div className="Right bg-gradient-to-tl from-bg via-bgl1 to-darkPurple w-[55%] flex flex-col items-center sm:hidden lg:flex">
         <AutoplaySlider
           style={{ height: "100%",width:"100%" }}
           bullets={false}
