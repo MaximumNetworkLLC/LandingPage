@@ -4,8 +4,9 @@ import AwesomeSlider from "react-awesome-slider";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 import "react-awesome-slider/dist/styles.css";
 import { useEffect, useState } from "react";
-import Confetti from 'react-confetti'
+import Confetti from "react-confetti";
 import { useWindowDimensions } from "../../hooks/useWindowDimension";
+import { maximumInstance } from "../../setup";
 
 const Home = () => {
   const { height, width } = useWindowDimensions();
@@ -23,16 +24,18 @@ const Home = () => {
   const [counter, setCounter] = useState();
 
   useEffect(() => {
-    let count = localStorage.getItem("Counter");
-    if (count) setCounter(count);
-  }, [counter, localStorage]);
+    maximumInstance()
+      .get(`/whiteListCounter`)
+      .then((response) => {
+        console.log("Response", response?.data?.whitelistCounter);
+        setCounter(response?.data?.whitelistCounter);
+      })
+      .catch((err) => console.log("Error", err));
+  }, []);
 
   return (
     <div className="App flex h-screen w-full font-mont">
-      <Confetti
-      width={width}
-      height={height}
-    />
+      <Confetti width={width} height={height} />
       {/* Left Banner */}
       <div className="Left w-full bg-gradient-to-tr from-slate-900 to-purple-800 p-5 flex flex-col justify-center lg:w-[45%]">
         <img

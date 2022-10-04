@@ -80,16 +80,6 @@ const Login = () => {
       .confirm(OTP)
       .then((result) => {
         const user = result.user;
-        maximumInstance(user?.accessToken)
-          .post(`/whiteListUser`, {
-            phoneNumber,
-            email,
-            name,
-          })
-          .then((response) => {
-            localStorage.setItem("Counter", response?.data?.whitelistCounter);
-          })
-          .catch((err) => console.log("Error", err));
         toast.success("Logged in successfully !!", {
           position: toast.POSITION.TOP_RIGHT,
         });
