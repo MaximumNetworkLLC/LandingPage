@@ -63,6 +63,12 @@ const Login = () => {
     // setPageIndex(1);
     // navigate('/home')
     if (phoneNumber && email && name) {
+      const userDetails = {
+       phone: phoneNumber,
+       email: email,
+       name: name,
+      };
+      localStorage.setItem("userDetails", userDetails);
       validateEmail(email)
         ? requestOTP()
         : toast.warning("Please Enter Valid Email Address", {
@@ -87,7 +93,8 @@ const Login = () => {
             name,
           })
           .then((response) => {
-            localStorage.setItem("Counter", response?.data?.whitelistCounter);
+            // localStorage.setItem("Counter", response?.data?.whitelistCounter);
+            // navigate('/home',{state:{counter:response?.data?.whitelistCounter}})
           })
           .catch((err) => console.log("Error", err));
         toast.success("Logged in successfully !!", {
@@ -281,7 +288,7 @@ const Login = () => {
                   width: width < 768 ? "40px" : "50px",
                   height: width < 768 ? "40px" : "50px",
                   fontWeight: 600,
-                  margin:4,
+                  margin: 4,
                 }}
               />
             </div>
