@@ -165,7 +165,7 @@ const Login = () => {
             <p className="text-white text-center text-2xl font-semibold 3xl:text-4xl ">
               Create Your Account
             </p>
-            <div className="inputContainer flex  flex-col  w-full items-center mt-5">
+            <div className="flex  flex-col  w-full items-center mt-5">
               <GradientContainer
                 height="h-20"
                 width="w-full"
@@ -221,8 +221,8 @@ const Login = () => {
                     >
                       {countries.map((item) => {
                         return (
-                          <option>
-                            {item?.code} ({item?.dial_code})
+                          <option style={{color:"#000",fontWeight:"600"}}>
+                            <p className="text-black">{item?.code} ({item?.dial_code})</p>
                           </option>
                         );
                       })}
