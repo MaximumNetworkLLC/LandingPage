@@ -35,11 +35,19 @@ const Login = () => {
     ));
   };
 
+  useEffect(() => {
+    console.log("CODE", countryCode, countryCode.replace(/^\D+/g, ""));
+  }, [countryCode]);
+
   const requestOTP = () => {
     console.log("OTP REQUESTED");
     generateRecaptcha();
     let appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, countryCode + phoneNumber, appVerifier)
+    signInWithPhoneNumber(
+      auth,
+      `+${countryCode.replace(/^\D+/g, "")}` + phoneNumber,
+      appVerifier
+    )
       .then((confirmationResult) => {
         console.log("REQUEST SENT");
         window.confirmationResult = confirmationResult;
