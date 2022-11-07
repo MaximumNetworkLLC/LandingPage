@@ -22,10 +22,6 @@ const Login = () => {
   const [OTP, setOTP] = useState("");
   const [countryCode, setCountryCode] = useState("IN (+91)");
 
-  useEffect(() => {
-    console.log(width, height);
-  }, [width, height]);
-
   const generateRecaptcha = () => {
     return (window.recaptchaVerifier = new RecaptchaVerifier(
       "sign-in-button",
@@ -40,10 +36,12 @@ const Login = () => {
   };
 
   const requestOTP = () => {
+    console.log("OTP REQUESTED");
     generateRecaptcha();
     let appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, "+91 " + phoneNumber, appVerifier)
+    signInWithPhoneNumber(auth, countryCode + phoneNumber, appVerifier)
       .then((confirmationResult) => {
+        console.log("REQUEST SENT");
         window.confirmationResult = confirmationResult;
       })
       .catch((err) => {
@@ -64,9 +62,9 @@ const Login = () => {
     // navigate('/home')
     if (phoneNumber && email && name) {
       const userDetails = {
-       phone: phoneNumber,
-       email: email,
-       name: name,
+        phone: phoneNumber,
+        email: email,
+        name: name,
       };
       localStorage.setItem("userDetails", userDetails);
       validateEmail(email)
@@ -228,8 +226,10 @@ const Login = () => {
                     >
                       {countries.map((item) => {
                         return (
-                          <option style={{color:"#000",fontWeight:"600"}}>
-                            <p className="text-black">{item?.code} ({item?.dial_code})</p>
+                          <option style={{ color: "#000", fontWeight: "600" }}>
+                            <p className="text-black">
+                              {item?.code} ({item?.dial_code})
+                            </p>
                           </option>
                         );
                       })}
